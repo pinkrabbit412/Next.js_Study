@@ -1,3 +1,12 @@
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: "챕터 #3: 연락처" ,
+  description: "더 이상의 자세한 설명은 생략한다.",
+}
+
+
 export default function ContactPage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

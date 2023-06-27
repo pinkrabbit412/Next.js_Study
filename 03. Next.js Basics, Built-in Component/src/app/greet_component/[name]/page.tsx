@@ -1,23 +1,26 @@
-/* 책에서는  다음과 같이 구표준으로 안내했으나,
-export async function getServerSideProps({params}) {
-  const { name } = params;
-  return { props: {name}} ;
-}
+"use client";
+
+/* Next.js 13에서 useRouter는 아래와 같이 변경됨:
+- useRouter 훅은 next/navigation 으로 import해야 함 (next/router X)
+- pathname string은 usePathname() 으로 대체됨
+- query 객체는 useParams() 및 useSearchParams() 으로 대체됨
+- router.events는 현재 지원되지 않음
+
+// 따라서 책에서는  다음과 같이 구표준으로 안내했으나,
+import { useRouter } from "next/router";
+...
+const { query } = useRouter();
 */
-// Next 13 이상에서는 아래와 같이 사용해야 함
-
-import { Metadata } from "next";
-
-// 동적 경로와 메타데이터
-export const generateMetadata = async( {params}: any ): Promise<Metadata> => {
-	return ({
-    title: "챕터 #3: 프로필(" + params.name + ")",
-    description: "더 이상의 자세한 설명은 생략한다.",
-	});
-}
 
 
-export default async function Greetings({params}: any) {
+// Next 13 이상에서는 이와 같이 사용해야 함
+import { useParams, useSearchParams } from "next/navigation"
+
+export default function Greetings() {
+  const params = useParams();
+  const search_params = useSearchParams();
+  console.log(params);
+  console.log(search_params.get("learning_nextjs"));
   if (!params.name) {
     return (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
